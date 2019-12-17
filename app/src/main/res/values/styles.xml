@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">#B4B4B4</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MyProgressDialogDespues" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#00C853</item>
+    </style>
+
+</resources>
