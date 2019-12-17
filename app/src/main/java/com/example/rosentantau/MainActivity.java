@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -237,30 +238,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void enviar(View v){
         try{
+
             iMain im3 = new iMain(path);
             String nombre = "RTsend";
             im3.nombre = nombre;
 
             List<mainTab> mtt = im3.all();
 
-            if (metCC()) {
-                if(mtt.isEmpty()){
-                    Toast.makeText(this, "No hay registros pendientes para enviar", Toast.LENGTH_LONG).show();
-                }else {
+            if(!mtt.isEmpty()) {
+                if (metCC()) {
+                    for (mainTab mt : mtt) {
+                        mt.setIdReg(mt.getIdReg());
+                        mt.setFecha(getFecha());
+                        mt.setCodebar(mt.getCodebar());
+                        mt.setSelSpinner(mt.getSelSpinner());
+                        mt.setTerminal(getPhoneName());
+
+                        Toast.makeText(this, "" + im3.record(mt), Toast.LENGTH_SHORT).show();
+                        im3.eliminar();
+                    }
+                } else {
+                    Toast.makeText(this, "Por el momento no tienes conexion", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(this, "Comprueba la conexión a una red" , Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this,"Por el momento no hay registros para enviar",Toast.LENGTH_SHORT).show();
             }
 
-            /*
-            if(mtt.isEmpty()){
-                Toast.makeText(this, "No hay registros pendientes para enviar", Toast.LENGTH_LONG).show();
-            }else {
-            }*/
-
-
-
         }catch (Exception ex){
+            Log.i("my app","validacion de btn enviar : \n \n \n"+ex);
             Toast.makeText(MainActivity.this, "Exception al enviar datos \n \n"+ex.toString(), Toast.LENGTH_SHORT).show();
         }
     }

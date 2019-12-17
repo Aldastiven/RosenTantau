@@ -1,5 +1,6 @@
 package com.example.rosentantau.Model;
 
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,19 +102,20 @@ public class iMain extends sqlConect implements main {
     }
 
     public String record(mainTab o){
+        //+"T00:00:00"
         try{
             PreparedStatement ps = cn.prepareStatement(ins);
             ps.setString(1,o.getCodebar());
-            ps.setString(2,o.getFecha()+"T00:00:00");
+            ps.setString(2,o.getFecha());
             ps.setString(3,o.getSelSpinner());
             ps.setString(4,"1");
             ps.setString(5,o.getTerminal());
-            if(ps.executeUpdate()>0) {
-                return "se enviaron los datos";
-            }else{
-                return "no se pudo enviar los datos";
-            }
+            ps.executeUpdate();
+
+            return "se enviaron los datos";
+
         }catch (Exception ex){
+            Log.i("my app","error en record \n"+ex);
             return "Error en record \n \n"+ex.toString();
         }
     }
